@@ -1,0 +1,21 @@
+{
+  "name": "polyglot-2015-event-driven-apps",
+  "version": "1.0.0",
+  "description": "Polyglot Event Driven App Lessons ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kbingman/polyglot-2015-event-driven-apps.git"
+  },
+  "author": "Keith Bingman",
+  "license": "MIT",
+  "homepage": "https://github.com/kbingman/polyglot-2015-event-driven-apps",
+  "devDependencies": {
+    "jquery": "^2.1.4",
+    "serve": "^1.4.0"
+  }
+}

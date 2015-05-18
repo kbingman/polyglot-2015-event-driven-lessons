@@ -1,0 +1,34 @@
+/* Minimal CSS */
+
+body {
+    padding: 20px;
+}
+
+h1 {
+  font-weight: 300;
+}
+
+input[type=text] {
+    vertical-align: baseline;
+}
+
+button, input[type=submit] {
+    border-width: .1rem;
+}
+
+.searchInput {
+    width: 30rem;
+}
+
+.results {
+    font-size: 0;
+}
+
+.thumbnail {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+
+}
+.thumbnail img {
+    display: block;
+}
