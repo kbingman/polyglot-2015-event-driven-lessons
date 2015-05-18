@@ -1,7 +1,5 @@
 'use strict'
 
-var API_KEY = 'XXXX';
-
 // UI - Interaction handlers
 $('[data-search]').on('submit', listenForQuery);
 
@@ -28,7 +26,7 @@ function renderResults(e, response) {
 }
 
 function getAjaxOptions(query) {
-    var url = 'https://api.instagram.com/v1/tags/' + data.query + '/media/recent';
+    var url = 'https://api.instagram.com/v1/tags/' + query + '/media/recent';
     return {
         url: url,
         jsonp: 'callback',
@@ -36,11 +34,13 @@ function getAjaxOptions(query) {
         data: {
             client_id: API_KEY
         },
-    }
+    };
 };
 
 function searchInstagram(e, data) {
-    return $.ajax(getAjaxOptions(query))
+    var options = getAjaxOptions(data.query);
+
+    return $.ajax(options)
         .done(function(response) {
             $(document).trigger('instagram:results', response);
         })
