@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve public"
+    "build:js": "browserify src/js/app.js -t babelify > public/js/app.js",
+    "watch:js": "watchify -t babelify src/js/app.js -o public/js/app.js --debug",
+    "start": "serve public & npm run watch:js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +16,10 @@
   "author": "Keith Bingman",
   "license": "MIT",
   "homepage": "https://github.com/kbingman/polyglot-2015-event-driven-apps",
-  "devDependencies": {
+  "dependencies": {
+    "babel": "^5.4.3",
+    "babelify": "^6.1.1",
+    "browserify": "^10.2.0",
     "jquery": "^2.1.4",
     "serve": "^1.4.0"
   }
