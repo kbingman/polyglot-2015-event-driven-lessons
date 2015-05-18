@@ -1,6 +1,4 @@
 'use strict'
-//
-var API_KEY = 'cc4b947cbca8405fa1b56f7df01c3677';
 
 // UI - Interaction handlers
 $('[data-search]').on('submit', listenForQuery);
