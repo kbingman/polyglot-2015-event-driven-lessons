@@ -1,6 +1,6 @@
 'use strict'
-
-var API_KEY = 'XXXX';
+//
+var API_KEY = 'cc4b947cbca8405fa1b56f7df01c3677';
 
 // UI - Interaction handlers
 $('[data-search]').on('submit', listenForQuery);
@@ -8,6 +8,22 @@ $('[data-search]').on('submit', listenForQuery);
 // API - Application Events
 $(document).on('instagram:results', renderResults);
 $(document).on('instagram:search', searchInstagram);
+
+var state = {
+    records: []
+};
+
+function updateState(data) {
+    if (state.query == data.query) {
+        state.records = state.records.concat(data.response.data);
+    } else {
+        state.records = data.response.data;
+    }
+    state.query = data.query;
+    state.maxID = data.response.pagination.next_max_tag_id;
+    state.minID = data.response.pagination.min_tag_id;
+    $(document).trigger('change');
+}
 
 function listenForQuery(e) {
     e.preventDefault();
@@ -28,7 +44,7 @@ function renderResults(e, response) {
 }
 
 function getAjaxOptions(query) {
-    var url = 'https://api.instagram.com/v1/tags/' + data.query + '/media/recent';
+    var url = 'https://api.instagram.com/v1/tags/' + query + '/media/recent';
     return {
         url: url,
         jsonp: 'callback',
@@ -40,9 +56,12 @@ function getAjaxOptions(query) {
 };
 
 function searchInstagram(e, data) {
-    return $.ajax(getAjaxOptions(query))
+    return $.ajax(getAjaxOptions(data.query))
         .done(function(response) {
-            $(document).trigger('instagram:results', response);
+            updateState({
+                query: data.query,
+                response: response
+            });
         })
         .error(function(response) {
             console.log(response);
