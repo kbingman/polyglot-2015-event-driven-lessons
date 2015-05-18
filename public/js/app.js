@@ -4,7 +4,7 @@
 $('[data-search]').on('submit', listenForQuery);
 
 // API - Application Events
-$(document).on('instagram:results', renderResults);
+$(document).on('app:change', renderResults);
 $(document).on('instagram:search', searchInstagram);
 
 var state = {
@@ -12,15 +12,13 @@ var state = {
 };
 
 function updateState(data) {
-    if (state.query == data.query) {
-        state.records = state.records.concat(data.response.data);
-    } else {
-        state.records = data.response.data;
-    }
+    console.log('updateState', +new Date());
+    state.records = data.response.data || state.records;
     state.query = data.query;
     state.maxID = data.response.pagination.next_max_tag_id;
     state.minID = data.response.pagination.min_tag_id;
-    $(document).trigger('change');
+
+    $(document).trigger('app:change', state);
 }
 
 function listenForQuery(e) {
@@ -31,8 +29,9 @@ function listenForQuery(e) {
     $(document).trigger('instagram:search', { query: query });
 }
 
-function renderResults(e, response) {
-    var html = response.data.map(function(record) {
+function renderResults(e, state) {
+    console.log('renderResults', +new Date());
+    var html = state.records.map(function(record) {
         var $div = $('<div></div>');
         var $img = $('<img src=' + record.images.thumbnail.url + '>');
 
@@ -54,8 +53,11 @@ function getAjaxOptions(query) {
 };
 
 function searchInstagram(e, data) {
-    return $.ajax(getAjaxOptions(data.query))
+    var options = getAjaxOptions(data.query);
+
+    return $.ajax(options)
         .done(function(response) {
+            console.log('ajax', +new Date());
             updateState({
                 query: data.query,
                 response: response
