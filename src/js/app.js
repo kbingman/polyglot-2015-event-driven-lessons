@@ -1,9 +1,5 @@
-import $ from 'jquery';
-
-import { State } from './state';
 import { SearchUI } from './search_ui';
-import { SearchAPI } from './search_api';
+import { instagramstore } from './instagram_store';
 
 SearchUI.initialize();
-SearchAPI.initialize();
-State.initialize();
+instagramstore.onChange(SearchUI.renderResults);

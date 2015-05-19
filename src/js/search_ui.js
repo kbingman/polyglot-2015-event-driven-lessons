@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { searchInstagram } from './search_api';
-
+import { instagramstore } from './instagram_store';
+import { actionCreator } from './action_creator';
 
 var SearchUI = {
     listenForQuery: function(e) {
@@ -8,12 +9,15 @@ var SearchUI = {
         var query = $(e.target).find('[name=query]').val();
         query = query.replace(/\s/g, '');
 
-        $(document).trigger('instagram:search', { query: query });
+        console.log('query', query);
+
+        // $(document).trigger('instagram:search', { query: query });
+        actionCreator.search(query);
     },
 
-    renderResults: function(e, state) {
+    renderResults: function() {
         console.log('renderResults', +new Date());
-        var html = state.records.map(function(record) {
+        var html = instagramstore.records.map(function(record) {
             var $div = $('<div></div>');
             var $img = $('<img src=' + record.images.thumbnail.url + '>');
 

@@ -14,25 +14,12 @@ var SearchAPI = {
         }
     },
 
-    searchInstagram: function(e, data) {
-        var options = getAjaxOptions(data.query);
+    searchInstagram: function(data) {
+        var options = this.getAjaxOptions(data.query);
 
-        return $.ajax(options)
-            .done(function(response) {
-                console.log('ajax', +new Date());
-                $(document).trigger('app:updateState', {
-                    query: data.query,
-                    response: response
-                });
-            })
-            .error(function(response) {
-                console.log(response);
-            });
-    },
-
-    initialize: function() {
-        $(document).on('instagram:search', this.searchInstagram);
+        return $.ajax(options);
     }
+
 }
 
 export { SearchAPI }
