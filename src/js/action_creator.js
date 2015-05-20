@@ -6,13 +6,13 @@ var actionCreator = {
 
     search: function (query) {
         Dispatcher.searchInstagram(query);
-        SearchAPI.searchInstagram(instagramstore.query)
+        SearchAPI.searchInstagram(instagramstore.state.query)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
     },
 
     getNextPage: function() {
-        SearchAPI.searchInstagram(instagramstore.query, instagramstore.maxID)
+        SearchAPI.searchInstagram(instagramstore.state.query, instagramstore.state.maxID)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
     },

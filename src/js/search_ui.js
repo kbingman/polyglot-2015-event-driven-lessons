@@ -9,15 +9,13 @@ var SearchUI = {
         var query = $(e.target).find('[name=query]').val();
         query = query.replace(/\s/g, '');
 
-        console.log('query', query);
-
-        // $(document).trigger('instagram:search', { query: query });
         actionCreator.search(query);
     },
 
     renderResults: function() {
-        console.log('renderResults', +new Date());
-        var html = instagramstore.records.map(function(record) {
+        var state = instagramstore.getState();
+
+        var html = state.records.map(function(record) {
             var $div = $('<div></div>');
             var $img = $('<img src=' + record.images.thumbnail.url + '>');
 

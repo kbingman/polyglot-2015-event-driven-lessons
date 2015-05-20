@@ -4,6 +4,7 @@ var SearchAPI = {
 
     getAjaxOptions: function(query) {
         var url = 'https://api.instagram.com/v1/tags/' + query + '/media/recent';
+
         return {
             url: url,
             jsonp: 'callback',
@@ -14,8 +15,8 @@ var SearchAPI = {
         }
     },
 
-    searchInstagram: function(data) {
-        var options = this.getAjaxOptions(data.query);
+    searchInstagram: function(query) {
+        var options = this.getAjaxOptions(query);
 
         return $.ajax(options);
     }

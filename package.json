@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:js": "browserify src/js/app.js -t babelify > public/js/app.js",
     "watch:js": "watchify -t babelify src/js/app.js -o public/js/app.js --debug",
-    "start": "serve public & npm run watch:js"
+    "start": "serve ./public & npm run watch:js"
   },
   "repository": {
     "type": "git",
