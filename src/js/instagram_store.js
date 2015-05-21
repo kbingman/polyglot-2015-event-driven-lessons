@@ -29,7 +29,7 @@ var instagramStore = {
     },
 
     removeChangeListener: function(callback){
-        $(document).on(CHANGE_EVENT, callback);
+        $(document).off(CHANGE_EVENT, callback);
     },
 
     getState: function() {
