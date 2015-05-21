@@ -11,22 +11,27 @@ var SearchUI = {
         actionCreator.search(query);
     },
 
-    renderResults: function() {
-        var state = instagramStore.getState();
-        var html = state.records.map(function(record) {
-            var $div = $('<div></div>');
-            var $img = $('<img src=' + record.images.thumbnail.url + '>');
+    render: function(state) {
+        var title = '<h2>Results for ' + state.query + '</h2>';
+        var records = state.records.map(function(record) {
+            var item = '<img src=' + record.images.thumbnail.url + '>';
 
-            return $div.addClass('thumbnail').html($img);
+            return '<div class="thumbnail">' + item + '</div>';
         });
-        $('[data-results]').html(html);
+
+        return title + records;
+    },
+
+    updateUI: function() {
+        var state = instagramStore.getState();
+        $('[data-results]').html(this.render(state));
     },
 
     initialize: function() {
         $('[data-search]').on('submit', this.listenForQuery);
 
         // Sets up store to render on change
-        instagramStore.addChangeListener(this.renderResults.bind(this));
+        instagramStore.addChangeListener(this.updateUI.bind(this));
     }
 }
 
