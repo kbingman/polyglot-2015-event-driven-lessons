@@ -24,11 +24,14 @@ var SearchUI = {
             []
         ];
 
-        return h('div', { id: 'results' }, [
-            h('h2', { id: 'title' }, state.query),
-            h('div', {}, state.records.map(function (record) {
-                return h('div', { className: 'thumbnail' },
-                    h('img', { src: record.images.thumbnail.url })
+        return h('div#results', [
+            h('h2#title', state.query),
+            h('ul', state.records.map(function (record) {
+                return h('li.thumbnail',
+                    h('img', {
+                        src: record.images.thumbnail.url,
+                        dataset: { id: record.id }
+                    })
                 );
             }))
         ]);
