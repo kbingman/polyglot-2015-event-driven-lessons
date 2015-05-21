@@ -2,6 +2,13 @@ import $ from 'jquery';
 import { instagramStore } from './instagram_store';
 import { actionCreator } from './action_creator';
 
+import {
+    h,
+    diff,
+    patch
+} from 'virtual-dom';
+import createElement from 'virtual-dom/create-element'
+
 var SearchUI = {
     listenForQuery: function(e) {
         e.preventDefault();
@@ -12,19 +19,28 @@ var SearchUI = {
     },
 
     render: function(state) {
-        var title = '<h2>Results for ' + state.query + '</h2>';
-        var records = state.records.map(function(record) {
-            var item = '<img src=' + record.images.thumbnail.url + '>';
+        var vDOM = [
+            [h('h2', {id: 'title'}, state.query)],
+            []
+        ];
 
-            return '<div class="thumbnail">' + item + '</div>';
-        });
-
-        return title + records;
+        return h('div', { id: 'results' }, [
+            h('h2', { id: 'title' }, state.query),
+            h('div', {}, state.records.map(function (record) {
+                return h('div', { className: 'thumbnail' },
+                    h('img', { src: record.images.thumbnail.url })
+                );
+            }))
+        ]);
     },
 
     updateUI: function() {
         var state = instagramStore.getState();
-        $('[data-results]').html(this.render(state));
+        var vTree = this.render(state);
+
+        // diffing goes here
+
+        $('#results').replaceWith(createElement(vTree));
     },
 
     initialize: function() {
