@@ -19,14 +19,9 @@ var SearchUI = {
     },
 
     render: function(state) {
-        var vDOM = [
-            [h('h2', {id: 'title'}, state.query)],
-            []
-        ];
-
         return h('div#results', [
             h('h2#title', state.query),
-            h('ul', state.records.map(function (record) {
+            h('ul',  state.records.map(function (record) {
                 return h('li.thumbnail',
                     h('img', {
                         src: record.images.thumbnail.url,
