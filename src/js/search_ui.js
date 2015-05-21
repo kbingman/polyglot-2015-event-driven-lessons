@@ -26,7 +26,8 @@ var SearchUI = {
 
     initialize: function() {
         $('[data-search]').on('submit', this.listenForQuery);
-        $(document).on('app:change', this.renderResults);
+
+        instagramstore.onChange(this.renderResults);
     }
 }
 

@@ -1,18 +1,18 @@
 import { SearchAPI } from './search_api';
 import { instagramstore } from './instagram_store';
-import { Dispatcher } from './dispatcher';
+import { AppDispatcher } from './app_dispatcher';
 
 var actionCreator = {
 
     search: function (query) {
         Dispatcher.searchInstagram(query);
-        SearchAPI.searchInstagram(instagramstore.state.query)
+        SearchAPI.searchInstagram(query)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
     },
 
-    getNextPage: function() {
-        SearchAPI.searchInstagram(instagramstore.state.query, instagramstore.state.maxID)
+    getNextPage: function(query, maxID) {
+        SearchAPI.searchInstagram(query, maxID)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
     },
