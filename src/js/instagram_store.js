@@ -4,11 +4,17 @@ import { EventEmitter } from 'events';
 
 import { AppDispatcher } from './app_dispatcher';
 
+/**
+ * The main state of the store. This is wear all data is stored
+ */
 var _state = {
     records: [],
     query: undefined,
 }
 
+/**
+ * Private methods for updating the state
+ */
 function _setStateQuery(payload) {
     _state.query = payload.query;
 }
@@ -17,6 +23,9 @@ function _setStateRecords(payload) {
     _state.records = payload.response.data;
 }
 
+/**
+ * A constant for the name of the chage event
+ */
 var CHANGE_EVENT = 'change';
 
 var instagramStore = {
@@ -36,6 +45,10 @@ var instagramStore = {
         return _state;
     },
 
+    /**
+     * Registers the callback with the Dispatcher, breaking it down
+     * with each action
+     */
     dispatcherIndex: AppDispatcher.register(function(payload){
         switch(payload.actionType) {
             case 'UPDATE_QUERY':

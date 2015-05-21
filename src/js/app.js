@@ -1,6 +1,4 @@
 import { SearchUI } from './search_ui';
-import { instagramStore } from './instagram_store';
 
+// We just initialize the UI components here
 SearchUI.initialize();
-
-window.instagramStore = instagramStore;

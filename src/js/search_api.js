@@ -1,10 +1,21 @@
 import $ from 'jquery';
 
+var BASE_API = 'https://api.instagram.com/v1';
+
 var SearchAPI = {
 
-    getAjaxOptions: function(query) {
-        var url = 'https://api.instagram.com/v1/tags/' + query + '/media/recent';
+    /**
+     * This is a utils function, used by the Actions to communicate with
+     * our API
+     */
+    searchInstagram: function(query) {
+        var url = BASE_API + '/tags/' + query + '/media/recent';
+        var options = this.getAjaxOptions(url);
 
+        return $.ajax(options);
+    },
+
+    getAjaxOptions: function(url) {
         return {
             url: url,
             jsonp: 'callback',
@@ -13,12 +24,6 @@ var SearchAPI = {
                 client_id: API_KEY
             },
         }
-    },
-
-    searchInstagram: function(query) {
-        var options = this.getAjaxOptions(query);
-
-        return $.ajax(options);
     }
 
 }
