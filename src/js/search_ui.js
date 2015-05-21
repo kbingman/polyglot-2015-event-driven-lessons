@@ -1,13 +1,13 @@
 import $ from 'jquery';
+import h from 'virtual-dom/h';
+import diff from 'virtual-dom/diff';
+import patch from 'virtual-dom/patch';
+import createElement from 'virtual-dom/create-element';
+
 import { instagramStore } from './instagram_store';
 import { actionCreator } from './action_creator';
 
-import {
-    h,
-    diff,
-    patch
-} from 'virtual-dom';
-import createElement from 'virtual-dom/create-element'
+var _vDOM = 'test';
 
 var SearchUI = {
     listenForQuery: function(e) {

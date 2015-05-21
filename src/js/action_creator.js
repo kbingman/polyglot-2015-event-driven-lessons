@@ -15,12 +15,6 @@ var actionCreator = {
             .error(actionCreator.handleAPIError);
     },
 
-    // getNextPage: function(query, maxID) {
-    //     SearchAPI.searchInstagram(query, maxID)
-    //         .done(actionCreator.receiveInstagramData)
-    //         .error(actionCreator.handleAPIError);
-    // },
-
     receiveInstagramData: function(response) {
         AppDispatcher.handleViewAction({
             actionType: 'UPDATE_RECORDS',
