@@ -9,7 +9,6 @@ var actionCreator = {
             actionType: 'UPDATE_QUERY',
             query: query
         });
-        // Dispatcher.searchInstagram(query);
         SearchAPI.searchInstagram(query)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
