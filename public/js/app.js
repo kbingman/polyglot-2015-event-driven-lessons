@@ -17,10 +17,9 @@ function listenForQuery(e) {
 
 function renderResults(e, response) {
     var html = response.data.map(function(record) {
-        var $div = $('<div></div>');
-        var $img = $('<img src=' + record.images.thumbnail.url + '>');
+        var item = '<img data-id="' + record.id + '" src=' + record.images.thumbnail.url + '>';
 
-        return $div.addClass('thumbnail').html($img);
+        return '<div class="thumbnail">' + item + '</div>';
     });
     $('[data-results]').html(html);
 }
