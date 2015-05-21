@@ -19,17 +19,17 @@ function _setStateRecords(payload) {
 
 var CHANGE_EVENT = 'change';
 
-var instagramStore = {
+var instagramStore = _.extend(EventEmitter.prototype, {
     emitChange: function(){
-        $(document).trigger(CHANGE_EVENT);
+        this.emit(CHANGE_EVENT);
     },
 
     addChangeListener: function(callback){
-        $(document).on(CHANGE_EVENT, callback);
+        this.on(CHANGE_EVENT, callback)
     },
 
     removeChangeListener: function(callback){
-        $(document).on(CHANGE_EVENT, callback);
+        this.removeListener(CHANGE_EVENT, callback)
     },
 
     getState: function() {
@@ -51,6 +51,6 @@ var instagramStore = {
         instagramStore.emitChange();
         return true;
     })
-};
+});
 
 export { instagramStore }
