@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import { searchInstagram } from './search_api';
-import { instagramstore } from './instagram_store';
+import { instagramStore } from './instagram_store';
 import { actionCreator } from './action_creator';
 
 var SearchUI = {
@@ -13,8 +12,7 @@ var SearchUI = {
     },
 
     renderResults: function() {
-        var state = instagramstore.getState();
-
+        var state = instagramStore.getState();
         var html = state.records.map(function(record) {
             var $div = $('<div></div>');
             var $img = $('<img src=' + record.images.thumbnail.url + '>');
@@ -27,7 +25,8 @@ var SearchUI = {
     initialize: function() {
         $('[data-search]').on('submit', this.listenForQuery);
 
-        instagramstore.onChange(this.renderResults);
+        // Sets up store to render on change
+        instagramStore.addChangeListener(this.renderResults.bind(this));
     }
 }
 

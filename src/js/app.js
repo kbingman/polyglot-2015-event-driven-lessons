@@ -1,4 +1,6 @@
 import { SearchUI } from './search_ui';
-import { instagramstore } from './instagram_store';
+import { instagramStore } from './instagram_store';
 
 SearchUI.initialize();
+
+window.instagramStore = instagramStore;

@@ -5,24 +5,31 @@ import { AppDispatcher } from './app_dispatcher';
 var actionCreator = {
 
     search: function (query) {
-        Dispatcher.searchInstagram(query);
+        AppDispatcher.handleViewAction({
+            actionType: 'UPDATE_QUERY',
+            query: query
+        });
+        // Dispatcher.searchInstagram(query);
         SearchAPI.searchInstagram(query)
             .done(actionCreator.receiveInstagramData)
             .error(actionCreator.handleAPIError);
     },
 
-    getNextPage: function(query, maxID) {
-        SearchAPI.searchInstagram(query, maxID)
-            .done(actionCreator.receiveInstagramData)
-            .error(actionCreator.handleAPIError);
-    },
+    // getNextPage: function(query, maxID) {
+    //     SearchAPI.searchInstagram(query, maxID)
+    //         .done(actionCreator.receiveInstagramData)
+    //         .error(actionCreator.handleAPIError);
+    // },
 
-    receiveInstagramData: function(data) {
-        console.log(+new Date());
-        Dispatcher.updateInstagramRecords(data);
+    receiveInstagramData: function(response) {
+        AppDispatcher.handleViewAction({
+            actionType: 'UPDATE_RECORDS',
+            response: response
+        });
     },
 
     handleAPIError: function(error) {
+        // real error handling goes here
         console.log(error);
     }
 };
