@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import { searchInstagram } from './search_api';
 
-
 var SearchUI = {
     listenForQuery: function(e) {
         e.preventDefault();
