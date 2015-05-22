@@ -10,15 +10,13 @@ $(document).on('app:updateState', updateState);
 $(document).on('instagram:search', searchInstagram);
 
 var state = {
-    records: []
+    records: [],
+    query: undefined
 };
 
 function updateState(e, data) {
-    console.log('updateState', +new Date());
     state.records = data.response.data || state.records;
     state.query = data.query;
-    state.maxID = data.response.pagination.next_max_tag_id;
-    state.minID = data.response.pagination.min_tag_id;
 
     $(document).trigger('app:change', state);
 }
@@ -32,7 +30,6 @@ function listenForQuery(e) {
 }
 
 function renderResults(e, state) {
-    console.log('renderResults', +new Date());
     var html = state.records.map(function(record) {
         var $div = $('<div></div>');
         var $img = $('<img src=' + record.images.thumbnail.url + '>');
