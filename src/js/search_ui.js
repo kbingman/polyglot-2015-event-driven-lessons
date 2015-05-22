@@ -7,7 +7,7 @@ import createElement from 'virtual-dom/create-element';
 import { instagramStore } from './instagram_store';
 import { actionCreator } from './action_creator';
 
-var _vDOM = 'test';
+var _vTree;
 
 var SearchUI = {
     /**
@@ -33,8 +33,8 @@ var SearchUI = {
      * the state into a virtual DOM tree.
      */
     render: function(state) {
-        return h('div#results', [
-            h('h2#title', state.query),
+        return h('div#results.results', [
+            h('h2#title', state.query || 'No Results'),
             h('ul', state.records.map(function (record) {
                 return h('li.thumbnail',
                     { onclick:  function(e) {
@@ -42,7 +42,8 @@ var SearchUI = {
                     }},
                     h('img', {
                         src: record.images.thumbnail.url,
-                        dataset: { id: record.id }
+                        dataset: { id: record.id },
+                        onclick: function(e) { console.log(record) }
                     })
                 );
             }))
@@ -54,12 +55,11 @@ var SearchUI = {
      */
     updateUI: function() {
         var state = instagramStore.getState();
-        var vTree = this.render(state);
+        var newTree = this.render(state);
+        var patches = diff(_vTree, newTree);
 
-        // diffing goes here
-
-        $('#results').replaceWith(createElement(vTree));
-        _vDOM = vTree;
+        this.node = patch(this.node, patches);
+        _vTree = newTree;
     },
 
     /**
@@ -67,6 +67,14 @@ var SearchUI = {
      * and the the Store to render on change
      */
     initialize: function() {
+        // Get initial state and
+        var state = instagramStore.getState();
+        _vTree = this.render(state);
+        this.node = createElement(_vTree);
+
+        $('#results').replaceWith($(this.node));
+
+        // Bind Events
         $('[data-search]').on('submit', this.listenForQuery);
 
         instagramStore.addChangeListener(this.updateUI.bind(this));
